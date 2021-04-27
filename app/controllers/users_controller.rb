@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   end
   
   def index
-    @users = user.all
+    @users = User.all
   end
   
   def edit
@@ -19,6 +19,11 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+  
+  private
+  def user_params
+    params.require(:user).permit(:name, :introduction, :profile_image)
   end
   
 end
