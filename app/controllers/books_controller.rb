@@ -19,14 +19,14 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    @user = current_user
+    @user = @book.user
     @new_book = Book.new
   end
 
   def edit
     @book = Book.find(params[:id])
-    unless current_user.id == @user.id
-      redirect_back fallback_location: books_path
+    unless current_user.id == @book.user.id
+      redirect_to books_path
     end
   end
 
