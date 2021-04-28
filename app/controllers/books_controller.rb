@@ -12,6 +12,8 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.all
+    @user = current_user
+    @book = Book.new
   end
 
   def show
@@ -20,6 +22,9 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+    unless current_user == @book.user
+      redirect_back fallback_location: books_path
+    end
   end
 
   def update
