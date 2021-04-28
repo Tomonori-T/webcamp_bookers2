@@ -5,6 +5,7 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to book_path(@book.id),notice: 'You have created book successfully.'
     else
+      @user = current_user
       @books = Book.all
       render :index
     end
@@ -18,11 +19,13 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
+    @user = current_user
+    @new_book = Book.new
   end
 
   def edit
     @book = Book.find(params[:id])
-    unless current_user == @book.user
+    unless current_user.id == @user.id
       redirect_back fallback_location: books_path
     end
   end

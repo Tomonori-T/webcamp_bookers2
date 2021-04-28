@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   
   def show
-    @user = User.find(params[:id])
+    @user = current_user
     @book = Book.new
+    @books = @user.books
   end
   
   def index
@@ -13,8 +14,8 @@ class UsersController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
-    unless @user == current_user
-      redirect_back fallback_location: user_path(current_user)
+    unless @user.id == current_user
+      redirect_back fallback_location: user_path(current_user.id)
     end
   end
   
